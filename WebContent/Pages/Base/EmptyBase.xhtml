@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/Pages/Base/Main.xhtml">
+
+	<ui:define name="body">
+		<h:form id="form" prependId="false" method="POST">
+
+			<ui:insert name="form_content"/>
+		
+		</h:form>
+		
+		<ui:insert name="content" />
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:outputPanel id="validationMessages"
+		autoUpdate="#{true}">
+		<h:panelGroup rendered="#{!empty bean.exceptions}" layout="block"
+			styleClass="ui-messages ui-widget">
+			<div class="ui-messages-error ui-corner-all">
+				<a onclick="$(this).parent().slideUp();return false;"
+					class="ui-messages-close" href="#"><span
+					class="ui-icon ui-icon-close"></span></a>
+				<ul>
+					<ui:repeat value="#{bean.exceptions}" var="exception">
+						<li class="ui-messages-error-detail">#{exception}</li>
+					</ui:repeat>
+				</ul>
+			</div>
+		</h:panelGroup>
+	</p:outputPanel>
+
+</ui:composition>

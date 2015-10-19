@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/Pages/Base/EmptyBase.xhtml">
+
+	<ui:param name="bean" value="#{testBean}"></ui:param>
+
+	<ui:define name="form_content">
+		<p:outputPanel id="questions_panel">
+
+			<ui:include src="/Pages/Components/ValidationMessage.xhtml" />
+
+			<ui:fragment rendered="#{!bean.dataSubmited}">
+				<ui:repeat var="question" value="#{bean.questions}">
+					<div>
+						<ui:include src="/Pages/Components/Question.xhtml">
+							<ui:param name="item" value="#{question}" />
+						</ui:include>
+					</div>
+				</ui:repeat>
+
+				<p:commandButton action="#{bean.submit}" value="#{msg.test_submit}" />
+			</ui:fragment>
+			<ui:fragment rendered="#{bean.dataSubmited}">
+				<p:outputLabel value="#{msg.test_dataSubmitted}" />
+			</ui:fragment>
+		</p:outputPanel>
+	</ui:define>
+</ui:composition>

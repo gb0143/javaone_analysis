@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p>
+		<span><p:outputLabel value="#{item.label}" />
+		<ui:fragment rendered="#{item.required}">
+			<span class="red">*</span>
+		</ui:fragment>:</span>
+	</p>
+	
+	<ui:fragment rendered="#{item.type == 'SINGLE_LINE_TEXT'}">
+		<p:inputText value="#{item.answer}" />
+	</ui:fragment>
+
+
+	<ui:fragment rendered="#{item.type == 'TEXTAREA'}">
+		<p:inputTextarea value="#{item.answer}" />
+	</ui:fragment>
+
+	<ui:fragment rendered="#{item.type == 'RADIO_BUTTON'}">
+		<p:selectOneRadio value="#{item.answer}" >
+			<f:selectItem itemValue="YES" itemLabel="Yes" />
+			<f:selectItem itemValue="NO" itemLabel="No" />
+		</p:selectOneRadio>
+	</ui:fragment>
+
+
+	<ui:fragment rendered="#{item.type == 'CHECKBOX'}">
+		<p:selectBooleanCheckbox value="#{item.booleanAnswer}" />
+	</ui:fragment>
+
+	<ui:fragment rendered="#{item.type == 'COMBOBOX'}">
+		<p:selectOneMenu value="#{item.answer}">
+			<f:selectItems value="#{item.options}" />
+		</p:selectOneMenu>
+	</ui:fragment>
+
+	<ui:fragment rendered="#{item.type == 'DATE'}">
+		<p:calendar value="#{item.dateAnswer}" />
+	</ui:fragment>
+
+	<p:separator />
+</ui:composition>

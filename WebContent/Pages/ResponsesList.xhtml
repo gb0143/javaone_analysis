@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/Pages/Base/EmptyBase.xhtml">
+
+	<ui:param name="bean" value="#{responsesListBean}"></ui:param>
+
+	<ui:define name="form_content">
+		<p:dataTable value="#{bean.responses}" var="response">
+			<p:columns value="#{bean.columns}" var="column">
+				<f:facet name="header">
+					<h:outputText value="#{column.header}" />
+				</f:facet>
+				<h:outputText value="#{response.get(column.property)}" />
+			</p:columns>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>

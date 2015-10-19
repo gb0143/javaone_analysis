@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<ui:param name="context" value="#{facesContext.externalContext.requestContextPath}"></ui:param>
+
+<h:head>
+	<title><h:outputText value="DC Service" /></title>
+
+	<script type="text/javascript"
+		src="#{context}/resources/javascript/javascript_helper.js" />
+
+	<link
+		href="#{context}/resources/styles/default.css"
+		media="all" rel="stylesheet" type="text/css" />
+
+
+</h:head>
+
+<h:body id="body">
+	<div class="content">
+		<div class="footer_down">
+			<ui:fragment>
+				<ui:include
+					src="/Pages/Components/Header.xhtml" />
+			</ui:fragment>
+
+			<div>
+				<ui:insert name="body" />
+				<div class="empty_block" />
+			</div>
+		</div>
+		<ui:include
+			src="/Pages/Components/Footer.xhtml" />
+
+	</div>
+</h:body>
+</html>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/Pages/Base/EmptyBase.xhtml">
+
+	<ui:param name="bean" value="#{fieldEditBean}"></ui:param>
+
+	<ui:define name="form_content">
+
+		<p:outputLabel
+			value="#{empty bean.field.id ? msg.fieldEdit_createField : msg.fieldEdit_editField}" />
+
+		<ui:include src="/Pages/Components/ValidationMessage.xhtml" />
+
+		<p:panelGrid columns="2">
+
+			<p:column>
+				<span>#{msg.fieldEdit_label}<span class="red">*</span>:
+				</span>
+				<p:inputText label="#{msg.fieldEdit_label}" id="field_label" value="#{bean.field.label}" />
+			</p:column>
+
+			<p:column>
+				<span>#{msg.fieldEdit_required}</span>
+				<p:selectBooleanCheckbox id="required"
+					value="#{bean.field.required}" />
+			</p:column>
+
+			<p:column>
+				<span>#{msg.fieldEdit_type}<span class="red">*</span>:
+				</span>
+				<p:selectOneMenu id="field_type" value="#{bean.field.type}">
+					<f:selectItems value="#{bean.fieldTypes}" />
+					<f:ajax listener="#{bean.typeChanged}" />
+				</p:selectOneMenu>
+			</p:column>
+
+			<p:column>
+				<span>#{msg.fieldEdit_active}</span>
+				<p:selectBooleanCheckbox value="#{bean.field.active}">
+					<f:ajax listener="#{bean.stateChange}" />
+				</p:selectBooleanCheckbox>
+			</p:column>
+
+			<p:column>
+				<p:outputPanel id="options">
+					<ui:fragment rendered="#{bean.showOptions}">
+						<p:inputText id="field_option_input" value="#{bean.option}" maxlength="20"
+							disabled="#{!bean.canAddOptions}" label="#{msg.fieldEdit_options}" />
+						<p:commandButton value="#{msg.fieldEdit_addOptions}"
+							disabled="#{!bean.canAddOptions}" action="#{bean.addOption}"
+							partialSubmit="options" />
+
+						<p:dataList id="field_options" value="#{bean.options}" 
+							var="option" type="unordered" itemType="none">
+							<f:facet name="header">
+								<span>#{msg.fieldEdit_options}<span class="red">*</span></span>
+							</f:facet>
+							<p:commandLink title="#{msg.fieldEdit_deleteOptions}"
+								styleClass="ui-icon ui-icon-trash"
+								action="#{bean.deleteOption(option.id)}"
+								style="float:left;margin-right:10px" />
+							<p:outputLabel value="#{option.label}" />
+						</p:dataList>
+					</ui:fragment>
+				</p:outputPanel>
+			</p:column>
+
+			<p:column />
+
+
+		</p:panelGrid>
+
+		<p:commandButton value="#{msg.fieldEdit_save}" action="#{bean.save}" />
+
+		<p:commandButton value="#{msg.fieldEdit_cancel}"
+			action="#{bean.cancel}" />
+
+	</ui:define>
+</ui:composition>

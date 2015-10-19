@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/Pages/Base/EmptyBase.xhtml">
+
+	<ui:param name="bean" value="#{fieldListBean}"></ui:param>
+
+	<ui:define name="form_content">
+
+		<p:commandButton value="#{msg.fieldList_addFiel}" action="#{bean.add}" />
+		
+		<p:outputPanel id="fields_panel">
+			<p:dataTable value="#{bean.fields}" var="field">
+				<p:column headerText="#{msg.fieldList_label}">
+					<h:outputText value="#{field.label}" />
+				</p:column>
+
+				<p:column headerText="#{msg.fieldList_type}">
+					<h:outputText value="#{field.type}" converter="enumConverter" />
+				</p:column>
+
+				<p:column headerText="#{msg.fieldList_required}">
+					<p:selectBooleanCheckbox value="#{field.required}" disabled="true" />
+				</p:column>
+
+				<p:column headerText="#{msg.fieldList_active}">
+					<p:selectBooleanCheckbox value="#{field.active}" disabled="true" />
+				</p:column>
+
+				<p:column headerText="">
+					<p:commandLink value="#{msg.fieldList_edit}"
+						action="#{bean.edit(field.id)}" />
+				</p:column>
+
+				<p:column headerText="">
+					<p:commandLink value="#{msg.fieldList_delete}"
+						action="#{bean.delete(field.id)}" update="fields_panel" />
+				</p:column>
+
+			</p:dataTable>
+		</p:outputPanel>
+		
+	</ui:define>
+</ui:composition>
