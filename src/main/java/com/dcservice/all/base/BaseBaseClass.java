@@ -1,14 +1,11 @@
 package com.dcservice.all.base;
 
-import java.util.logging.Logger;
-
-import com.ocpsoft.shade.org.apache.commons.logging.Log;
-import com.ocpsoft.shade.org.apache.commons.logging.impl.LogFactoryImpl;
+import sun.rmi.runtime.Log;
 
 public class BaseBaseClass {
-	private Log baseLogger = LogFactoryImpl.getFactory().getLog(this.getClass());
-	
-	private Log getLog(){
-		return baseLogger;
-	}
+    private Log baseLogger = LogFactoryImpl.getFactory().getLog(this.getClass());
+
+    private Log getLog() {
+	return baseLogger;
+    }
 }

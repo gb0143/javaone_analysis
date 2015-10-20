@@ -3,14 +3,6 @@ package com.dcservice.persistence.models.fields;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.dcservice.persistence.models.FieldResponse;
 import com.dcservice.persistence.models.Option;
 import com.dcservice.persistence.models.base.BaseModel;
@@ -20,79 +12,79 @@ import com.dcservice.persistence.models.enums.FieldType;
 @Table
 public class Field extends BaseModel implements Serializable {
 
-	private static final long serialVersionUID = -5222710508176943878L;
+    private static final long serialVersionUID = -5222710508176943878L;
 
-	@Column(nullable = false)
-	public FieldType type;
+    @Column(nullable = false)
+    public FieldType type;
 
-	@Column(nullable = false)
-	public String label;
+    @Column(nullable = false)
+    public String label;
 
-	@Column(nullable = false)
-	public Boolean required = false;
+    @Column(nullable = false)
+    public Boolean required = false;
 
-	@Column(nullable = false)
-	public Boolean active = true;
+    @Column(nullable = false)
+    public Boolean active = true;
 
-	@OneToMany(mappedBy = "field")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	public Set<Option> options;
+    @OneToMany(mappedBy = "field")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public Set<Option> options;
 
-	@OneToMany(mappedBy = "field")
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	public Set<FieldResponse> responses;
+    @OneToMany(mappedBy = "field")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public Set<FieldResponse> responses;
 
-	public int getResponsesCount() {
-		
-		return getResponsesCount();
-	}
+    public int getResponsesCount() {
 
-	public FieldType getType() {
-		return type;
-	}
+	return getResponsesCount();
+    }
 
-	public void setType(FieldType type) {
-		this.type = type;
-	}
+    public FieldType getType() {
+	return type;
+    }
 
-	public String getLabel() {
-		return label;
-	}
+    public void setType(FieldType type) {
+	this.type = type;
+    }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+    public String getLabel() {
+	return label;
+    }
 
-	public Boolean getRequired() {
-		return required;
-	}
+    public void setLabel(String label) {
+	this.label = label;
+    }
 
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
+    public Boolean getRequired() {
+	return required;
+    }
 
-	public Boolean getActive() {
-		return active;
-	}
+    public void setRequired(Boolean required) {
+	this.required = required;
+    }
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
+    public Boolean getActive() {
+	return active;
+    }
 
-	public Set<Option> getOptions() {
-		return options;
-	}
+    public void setActive(Boolean active) {
+	this.active = active;
+    }
 
-	public void setOptions(Set<Option> options) {
-		this.options = options;
-	}
+    public Set<Option> getOptions() {
+	return options;
+    }
 
-	public Set<FieldResponse> getResponses() {
-		return responses;
-	}
+    public void setOptions(Set<Option> options) {
+	this.options = options;
+    }
 
-	public void setResponses(Set<FieldResponse> responses) {
-		this.responses = responses;
-	}
+    public Set<FieldResponse> getResponses() {
+	return responses;
+    }
+
+    public void setResponses(Set<FieldResponse> responses) {
+	this.responses = responses;
+    }
 
 }

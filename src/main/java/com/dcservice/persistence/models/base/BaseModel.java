@@ -2,14 +2,6 @@ package com.dcservice.persistence.models.base;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
-
-
 @MappedSuperclass
 public class BaseModel implements IIndexed {
 
@@ -30,34 +22,34 @@ public class BaseModel implements IIndexed {
 
     @Override
     public Long getId() {
-        return id;
+	return id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
     public Long getVersion() {
-        return version;
+	return version;
     }
 
     public void setVersion(Long version) {
-        this.version = version;
+	this.version = version;
     }
 
     public Date getCreatedDate() {
-        return createdDate;
+	return createdDate;
     }
 
     public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+	this.createdDate = createdDate;
     }
 
     public Date getUpdatedDate() {
-        return updatedDate;
+	return updatedDate;
     }
 
     public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
+	this.updatedDate = updatedDate;
     }
 }

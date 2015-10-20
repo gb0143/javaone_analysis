@@ -2,54 +2,45 @@ package com.dcservice.persistence;
 
 import com.dcservice.all.base.BaseBaseClass;
 
-public class SessionTracker  extends BaseBaseClass 
-{
+public class SessionTracker extends BaseBaseClass {
     private static SessionTracker instance;
 
     @SuppressWarnings("unused")
-    private int                   count   = 0;
+    private int count = 0;
 
-    private Object                monitor = new Object();
+    private Object monitor = new Object();
 
-    public static synchronized SessionTracker getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new SessionTracker();
-        }
+    public static synchronized SessionTracker getInstance() {
+	if (instance == null) {
+	    instance = new SessionTracker();
+	}
 
-        return instance;
+	return instance;
     }
 
-    public void sessionOpening()
-    {
-        this.sessionOpening(null);
+    public void sessionOpening() {
+	this.sessionOpening(null);
     }
 
-    public void sessionClosing()
-    {
-        this.sessionClosing(null);
+    public void sessionClosing() {
+	this.sessionClosing(null);
     }
 
-    public void sessionOpening(String clazz)
-    {
-        synchronized (monitor)
-        {
-            count++;
-        }
-        //        System.out.println("Opening session... "
-        //                + (clazz == null ? "" : String.format("from: %s", clazz))
-        //                + " Opened sessions: " + count);
+    public void sessionOpening(String clazz) {
+	synchronized (monitor) {
+	    count++;
+	}
+	// System.out.println("Opening session... "
+	// + (clazz == null ? "" : String.format("from: %s", clazz))
+	// + " Opened sessions: " + count);
     }
 
-    public void sessionClosing(String clazz)
-    {
-        synchronized (monitor)
-        {
-            count--;
-        }
-        //        System.out.println("Closing session... "
-        //                + (clazz == null ? "" : String.format("from: %s", clazz))
-        //                + " Opened sessions: " + count);
+    public void sessionClosing(String clazz) {
+	synchronized (monitor) {
+	    count--;
+	}
+	// System.out.println("Closing session... "
+	// + (clazz == null ? "" : String.format("from: %s", clazz))
+	// + " Opened sessions: " + count);
     }
 }

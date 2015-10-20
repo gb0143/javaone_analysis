@@ -1,7 +1,6 @@
 package com.dcservice.persistence;
 
-public interface IAction
-{
+public interface IAction {
     public void onBeforeExecute();
 
     public void onException(Exception e) throws Exception;
