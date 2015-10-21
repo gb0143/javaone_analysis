@@ -11,27 +11,27 @@ import com.dcservice.persistence.models.fields.Field;
 @Table
 public class Response extends BaseModel implements Serializable {
 
-    private static final long serialVersionUID = 754140410656222737L;
+  private static final long serialVersionUID = 754140410656222737L;
 
-    @OneToMany(mappedBy = "response")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Set<FieldResponse> fieldResponses;
+  @OneToMany(mappedBy = "response")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Set<FieldResponse> fieldResponses;
 
-    public int getSummuryFieldResponses() {
-	int count = 0;
-	for (FieldResponse item : fieldResponses) {
-	    Field field = item.field;
-	    count += field.getResponsesCount();
-	}
-	return count;
+  public int getSummuryFieldResponses() {
+    int count = 0;
+    for (FieldResponse item : fieldResponses) {
+      Field field = item.field;
+      count += field.getResponsesCount();
     }
+    return count;
+  }
 
-    public Set<FieldResponse> getFieldResponses() {
-	return fieldResponses;
-    }
+  public Set<FieldResponse> getFieldResponses() {
+    return fieldResponses;
+  }
 
-    public void setFieldResponses(Set<FieldResponse> fieldResponses) {
-	this.fieldResponses = fieldResponses;
-    }
+  public void setFieldResponses(Set<FieldResponse> fieldResponses) {
+    this.fieldResponses = fieldResponses;
+  }
 
 }

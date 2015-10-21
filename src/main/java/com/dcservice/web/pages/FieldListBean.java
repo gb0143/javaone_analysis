@@ -16,39 +16,40 @@ import sun.rmi.runtime.Log;
 @ViewScoped
 public class FieldListBean extends BasePageBean implements Serializable {
 
-    public transient final Log log = LogFactory.getLog(getClass());
+  public transient final Log log = LogFactory.getLog(getClass());
 
-    private List<Field> fields;
+  private List<Field> fields;
 
-    @Override
-    protected void onConstruct() {
-	try {
-	    fields = DaoManager.query().from(QField.field).fetchAll().list(QField.field);
-	} catch (Exception e) {
-	    log.error(e.getMessage(), e);
-	}
+  @Override
+  protected void onConstruct() {
+    try {
+      fields = DaoManager.query().from(QField.field).fetchAll().list(QField.field);
+    } catch (Exception e) {
+      log.error(e.getMessage(), e);
     }
+  }
 
-    public void add() {
-	RedirectHelper.goTo(PagesTypes.FIELD_NEW);
-    }
+  public void add() {
+    RedirectHelper.goTo(PagesTypes.FIELD_NEW);
+  }
 
-    public void edit(Long id) {
-	RedirectHelper.goTo(PagesTypes.FIELD_EDIT, id);
-    }
+  public void edit(Long id) {
+    RedirectHelper.goTo(PagesTypes.FIELD_EDIT, id);
+  }
 
-    public void delete(Long id) throws Exception {
-	Field field = DaoManager.query().from(QField.field).where(QField.field.id.eq(id)).uniqueResult(QField.field);
-	ListHelper.remove(fields, field);
-	DaoManager.remove(field, true);
-    }
+  public void delete(Long id) throws Exception {
+    Field field = DaoManager.query().from(QField.field).where(QField.field.id.eq(id))
+	.uniqueResult(QField.field);
+    ListHelper.remove(fields, field);
+    DaoManager.remove(field, true);
+  }
 
-    public List<Field> getFields() {
-	return fields;
-    }
+  public List<Field> getFields() {
+    return fields;
+  }
 
-    public void setFields(List<Field> fields) {
-	this.fields = fields;
-    }
+  public void setFields(List<Field> fields) {
+    this.fields = fields;
+  }
 
 }

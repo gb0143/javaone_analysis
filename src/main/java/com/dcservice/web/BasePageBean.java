@@ -10,56 +10,56 @@ import com.sun.xml.internal.ws.client.RequestContext;
 
 public abstract class BasePageBean implements Serializable {
 
-    @PostConstruct
-    public void init() {
-	onConstruct();
+  @PostConstruct
+  public void init() {
+    onConstruct();
+  }
+
+  protected abstract void onConstruct();
+
+  protected boolean isPageBean() {
+    return true;
+  }
+
+  public void submit() {
+    try {
+      ((TestBean) this).onSubmit();
+      HeaderBean.updateResponsesCount();
+    } catch (Exception e) {
     }
 
-    protected abstract void onConstruct();
+  }
 
-    protected boolean isPageBean() {
-	return true;
+  public void updateJS(String str) {
+    RequestContext context = RequestContext.getCurrentInstance();
+    if (context != null) {
+      context.update(str);
     }
+  }
 
-    public void submit() {
-	try {
-	    ((TestBean) this).onSubmit();
-	    HeaderBean.updateResponsesCount();
-	} catch (Exception e) {
-	}
+  public HttpServletRequest getRequest() {
+    return (HttpServletRequest) getExternalContext().getRequest();
+  }
 
-    }
+  public ServletResponse getResponse() {
+    return (ServletResponse) getExternalContext().getResponse();
+  }
 
-    public void updateJS(String str) {
-	RequestContext context = RequestContext.getCurrentInstance();
-	if (context != null) {
-	    context.update(str);
-	}
-    }
+  public FacesContext getContext() {
+    return FacesContext.getCurrentInstance();
+  }
 
-    public HttpServletRequest getRequest() {
-	return (HttpServletRequest) getExternalContext().getRequest();
-    }
+  public ExternalContext getExternalContext() {
+    return getContext().getExternalContext();
+  }
 
-    public ServletResponse getResponse() {
-	return (ServletResponse) getExternalContext().getResponse();
-    }
+  public String getRequestContextPath() {
+    return getContext().getExternalContext().getRequestContextPath();
+  }
 
-    public FacesContext getContext() {
-	return FacesContext.getCurrentInstance();
-    }
-
-    public ExternalContext getExternalContext() {
-	return getContext().getExternalContext();
-    }
-
-    public String getRequestContextPath() {
-	return getContext().getExternalContext().getRequestContextPath();
-    }
-
-    public boolean isPostback() {
-	FacesContext facesContext = FacesContext.getCurrentInstance();
-	return facesContext.isPostback();
-    }
+  public boolean isPostback() {
+    FacesContext facesContext = FacesContext.getCurrentInstance();
+    return facesContext.isPostback();
+  }
 
 }

@@ -9,29 +9,29 @@ import com.dcservice.persistence.models.fields.Field;
 @Table
 public class Option extends BaseModel implements Serializable {
 
-    private static final long serialVersionUID = 4210698261930953201L;
+  private static final long serialVersionUID = 4210698261930953201L;
 
-    @Column
-    private String label;
+  @Column
+  private String label;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    private Field field;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(nullable = false)
+  private Field field;
 
-    public String getLabel() {
-	return label;
-    }
+  public String getLabel() {
+    return label;
+  }
 
-    public void setLabel(String label) {
-	this.label = label;
-    }
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
-    public Field getField() {
-	return field;
-    }
+  public Field getField() {
+    return field;
+  }
 
-    public void setField(Field field) {
-	this.field = field;
-    }
+  public void setField(Field field) {
+    this.field = field;
+  }
 
 }

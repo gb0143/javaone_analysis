@@ -10,41 +10,41 @@ import com.dcservice.persistence.models.responses.Response;
 @Table
 public class FieldResponse extends BaseModel implements Serializable {
 
-    private static final long serialVersionUID = 4391216983978279275L;
+  private static final long serialVersionUID = 4391216983978279275L;
 
-    @Column
-    public String answer;
+  @Column
+  public String answer;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    public Field field;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(nullable = false)
+  public Field field;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
-    public Response response;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(nullable = false)
+  public Response response;
 
-    public String getAnswer() {
-	return answer;
-    }
+  public String getAnswer() {
+    return answer;
+  }
 
-    public void setAnswer(String answer) {
-	this.answer = answer;
-    }
+  public void setAnswer(String answer) {
+    this.answer = answer;
+  }
 
-    public Field getField() {
-	return field;
-    }
+  public Field getField() {
+    return field;
+  }
 
-    public void setField(Field field) {
-	this.field = field;
-    }
+  public void setField(Field field) {
+    this.field = field;
+  }
 
-    public Response getResponse() {
-	return response;
-    }
+  public Response getResponse() {
+    return response;
+  }
 
-    public void setResponse(Response response) {
-	this.response = response;
-    }
+  public void setResponse(Response response) {
+    this.response = response;
+  }
 
 }

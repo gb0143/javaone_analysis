@@ -17,159 +17,163 @@ import com.dcservice.persistence.models.responses.Response;
 
 public class HibernateUtil extends BaseBaseClass implements IConnectionManager {
 
-    private static SessionFactory sessionFactory;
+  private static SessionFactory sessionFactory;
 
-    private static HibernateUtil instance;
+  private static HibernateUtil instance;
 
-    private static ServiceRegistry serviceRegistry;
+  private static ServiceRegistry serviceRegistry;
 
-    private static List<IConnectionListner> connectionListners = new ArrayList<IConnectionListner>();
+  private static List<IConnectionListner> connectionListners = new ArrayList<IConnectionListner>();
 
-    public static void addAnnotatedClasses(Configuration config) {
-	config.addAnnotatedClass(Field.class);
-	config.addAnnotatedClass(Option.class);
-	config.addAnnotatedClass(Response.class);
-	config.addAnnotatedClass(FieldResponse.class);
+  public static void addAnnotatedClasses(Configuration config) {
+    config.addAnnotatedClass(Field.class);
+    config.addAnnotatedClass(Option.class);
+    config.addAnnotatedClass(Response.class);
+    config.addAnnotatedClass(FieldResponse.class);
 
+  }
+
+  public static List<String> getViewClasses() {
+    List<String> viewClasses = new ArrayList<String>();
+
+    return viewClasses;
+  }
+
+  public static void addConnectionListener(IConnectionListner listener) {
+    connectionListners.add(listener);
+  }
+
+  public static void removeConnectionListener(IConnectionListner listener) {
+    connectionListners.remove(listener);
+  }
+
+  public static synchronized SessionFactory getSessionFactory()
+      throws ExceptionInInitializerError, Exception {
+    if (sessionFactory == null) {
+      createSessionFactory();
     }
 
-    public static List<String> getViewClasses() {
-	List<String> viewClasses = new ArrayList<String>();
+    return sessionFactory;
+  }
 
-	return viewClasses;
+  public static HibernateUtil getInstance() {
+    if (instance == null) {
+      instance = new HibernateUtil();
     }
 
-    public static void addConnectionListener(IConnectionListner listener) {
-	connectionListners.add(listener);
-    }
+    return instance;
+  }
 
-    public static void removeConnectionListener(IConnectionListner listener) {
-	connectionListners.remove(listener);
-    }
+  public static Map<String, String> connectionSettings = new HashMap<String, String>();
 
-    public static synchronized SessionFactory getSessionFactory() throws ExceptionInInitializerError, Exception {
-	if (sessionFactory == null) {
-	    createSessionFactory();
-	}
+  private static void createSessionFactory() throws ExceptionInInitializerError, Exception {
+    try {
+      Date d1 = new Date();
+      System.out.println("HibernateUtil: Opening DB connection.");
+      Configuration config = new Configuration();
+      HibernateUtil.addAnnotatedClasses(config);
+      config.configure();
 
-	return sessionFactory;
-    }
+      Map<String, String> params = new HashMap<String, String>();
 
-    public static HibernateUtil getInstance() {
-	if (instance == null) {
-	    instance = new HibernateUtil();
-	}
+      params.put("host", String.valueOf(config.getProperties().get("hibernate.connection.host")));
+      params.put("database",
+	  String.valueOf(config.getProperties().get("hibernate.connection.database")));
 
-	return instance;
-    }
+      connectionSettings.put("url",
+	  String.valueOf(config.getProperties().get("hibernate.connection.url")));
+      connectionSettings.put("username", config.getProperty("hibernate.connection.username"));
+      connectionSettings.put("password", config.getProperty("hibernate.connection.password"));
 
-    public static Map<String, String> connectionSettings = new HashMap<String, String>();
+      config.getProperties().put("hibernate.connection.url", connectionSettings.get("url"));
 
-    private static void createSessionFactory() throws ExceptionInInitializerError, Exception {
-	try {
-	    Date d1 = new Date();
-	    System.out.println("HibernateUtil: Opening DB connection.");
-	    Configuration config = new Configuration();
-	    HibernateUtil.addAnnotatedClasses(config);
-	    config.configure();
+      System.out.println("HOST: " + config.getProperty("hibernate.connection.host"));
+      System.out.println("DB: " + config.getProperty("hibernate.connection.database"));
+      System.out.println("USER: " + connectionSettings.get("username"));
+      System.out.println("PASSWORD: " + connectionSettings.get("password"));
 
-	    Map<String, String> params = new HashMap<String, String>();
+      serviceRegistry = new StandardServiceRegistryBuilder().applySettings(config.getProperties())
+	  .build();
 
-	    params.put("host", String.valueOf(config.getProperties().get("hibernate.connection.host")));
-	    params.put("database", String.valueOf(config.getProperties().get("hibernate.connection.database")));
+      sessionFactory = config.buildSessionFactory(serviceRegistry);
 
-	    connectionSettings.put("url", String.valueOf(config.getProperties().get("hibernate.connection.url")));
-	    connectionSettings.put("username", config.getProperty("hibernate.connection.username"));
-	    connectionSettings.put("password", config.getProperty("hibernate.connection.password"));
+      checkConnection(d1);
+    } catch (Exception ex) {
+      onConnectionFail();
+      System.err.println("Failed to create sessionFactory object." + ex);
 
-	    config.getProperties().put("hibernate.connection.url", connectionSettings.get("url"));
-
-	    System.out.println("HOST: " + config.getProperty("hibernate.connection.host"));
-	    System.out.println("DB: " + config.getProperty("hibernate.connection.database"));
-	    System.out.println("USER: " + connectionSettings.get("username"));
-	    System.out.println("PASSWORD: " + connectionSettings.get("password"));
-
-	    serviceRegistry = new StandardServiceRegistryBuilder().applySettings(config.getProperties()).build();
-
-	    sessionFactory = config.buildSessionFactory(serviceRegistry);
-
-	    checkConnection(d1);
-	} catch (Exception ex) {
-	    onConnectionFail();
-	    System.err.println("Failed to create sessionFactory object." + ex);
-
-	    throw new Exception(ex);
-
-	}
-    }
-
-    public static void checkConnection() {
-	Session s = null;
-	try {
-	    s = sessionFactory.openSession();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	s.beginTransaction().commit();
-	SessionTracker.getInstance().sessionOpening("HibernateUtil");
-	s.close();
-	SessionTracker.getInstance().sessionClosing("HibernateUtil");
-	s = null;
+      throw new Exception(ex);
 
     }
+  }
 
-    private static void checkConnection(Date d1) {
-	try {
-	    checkConnection();
-	} catch (Exception e) {
-	    System.out.println("Opening a DB connection... Failed");
-	    System.out.println(e);
-	    onConnectionFail();
-	    return;
-	}
+  public static void checkConnection() {
+    Session s = null;
+    try {
+      s = sessionFactory.openSession();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    s.beginTransaction().commit();
+    SessionTracker.getInstance().sessionOpening("HibernateUtil");
+    s.close();
+    SessionTracker.getInstance().sessionClosing("HibernateUtil");
+    s = null;
 
-	System.out.println(String.format("Connection was successfully opened in %d seconds",
-		(new Date().getTime() - d1.getTime()) / 1000));
-	onSuccessConnection();
+  }
+
+  private static void checkConnection(Date d1) {
+    try {
+      checkConnection();
+    } catch (Exception e) {
+      System.out.println("Opening a DB connection... Failed");
+      System.out.println(e);
+      onConnectionFail();
+      return;
     }
 
-    private static void onSuccessConnection() {
-	if (connectionListners == null) {
-	    return;
-	}
-	for (IConnectionListner item : connectionListners) {
-	    item.fireConnetionEstablished();
-	}
+    System.out.println(String.format("Connection was successfully opened in %d seconds",
+	(new Date().getTime() - d1.getTime()) / 1000));
+    onSuccessConnection();
+  }
+
+  private static void onSuccessConnection() {
+    if (connectionListners == null) {
+      return;
+    }
+    for (IConnectionListner item : connectionListners) {
+      item.fireConnetionEstablished();
+    }
+  }
+
+  private static void onConnectionFail() {
+    if (connectionListners == null) {
+      return;
+    }
+    for (IConnectionListner item : connectionListners) {
+      item.fireConnetionResufed();
+    }
+  }
+
+  public static void shutdown() {
+    onConnectionFail();
+    // Close caches and connection pools
+    if (sessionFactory != null) {
+      sessionFactory.close();
+      sessionFactory = null;
     }
 
-    private static void onConnectionFail() {
-	if (connectionListners == null) {
-	    return;
-	}
-	for (IConnectionListner item : connectionListners) {
-	    item.fireConnetionResufed();
-	}
-    }
+  }
 
-    public static void shutdown() {
-	onConnectionFail();
-	// Close caches and connection pools
-	if (sessionFactory != null) {
-	    sessionFactory.close();
-	    sessionFactory = null;
-	}
-
+  @Override
+  public void handleConfigFileChange() {
+    HibernateUtil.shutdown();
+    try {
+      createSessionFactory();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-
-    @Override
-    public void handleConfigFileChange() {
-	HibernateUtil.shutdown();
-	try {
-	    createSessionFactory();
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
-	System.out.println("SessionFactory recreated");
-    }
+    System.out.println("SessionFactory recreated");
+  }
 
 }
