@@ -27,7 +27,6 @@ public abstract class BasePageBean implements Serializable {
       HeaderBean.updateResponsesCount();
     } catch (Exception e) {
     }
-
   }
 
   public void updateJS(String str) {

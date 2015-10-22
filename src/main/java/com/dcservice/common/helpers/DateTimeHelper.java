@@ -644,7 +644,7 @@ public class DateTimeHelper extends BaseBaseClass {
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz,
 	List<Long> excludeList)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+	    throws Exception {
       return fillList(clazz, null, excludeList);
     }
 
@@ -655,13 +655,13 @@ public class DateTimeHelper extends BaseBaseClass {
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz, Order order,
 	List<Long> excludeList)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+	    throws Exception {
       return fillList(clazz, new ArrayList<Criterion>(0), order, excludeList);
     }
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz,
 	List<Criterion> ctiretions, Order order, List<Long> excludeList)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+	    throws Exception {
       List<SelectItem> list = new ArrayList<SelectItem>();
       list.add(SelectItemHelper.getNotSelected());
 
@@ -675,31 +675,31 @@ public class DateTimeHelper extends BaseBaseClass {
     }
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz, Order order)
-	throws HibernateException, PersistenceBeanException, IllegalAccessException {
+            throws Exception {
       return fillList(clazz, order, true);
     }
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz, Order order,
 	boolean addNotSelected)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+	    throws Exception {
       return fillList(clazz, order, new ArrayList<Criterion>(), addNotSelected);
     }
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz, Order order,
 	List<Criterion> criterions, boolean addNotSelected)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+	    throws Exception {
       return fillList(clazz, order, criterions, addNotSelected, false);
     }
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz, Order order,
-	List<Criterion> criterions, boolean addNotSelected, boolean addAllElements)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+                                                                  List<Criterion> criterions, boolean addNotSelected, boolean addAllElements)
+            throws Exception {
       List<SelectItem> list = new ArrayList<SelectItem>();
       if (addNotSelected) {
-	list.add(SelectItemHelper.getNotSelected());
+        list.add(SelectItemHelper.getNotSelected());
       }
       if (addAllElements) {
-	list.add(SelectItemHelper.getAllElement());
+        list.add(SelectItemHelper.getAllElement());
       }
 
       /*
@@ -712,7 +712,7 @@ public class DateTimeHelper extends BaseBaseClass {
 
     public static <T extends BaseModel> List<SelectItem> fillList(Class<T> clazz, Order order,
 	List<Criterion> criterions, List<String> criteriaAlias, boolean addNotSelected)
-	    throws HibernateException, PersistenceBeanException, IllegalAccessException {
+	    throws Exception {
       List<SelectItem> list = new ArrayList<SelectItem>();
       if (addNotSelected) {
 	list.add(SelectItemHelper.getNotSelected());

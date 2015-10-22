@@ -97,15 +97,7 @@ public class TestBean extends BaseValidationBean implements Serializable {
 	switch (question.getType()) {
 	case TEXTAREA:
 	case SINGLE_LINE_TEXT:
-	case COMBOBOX:
-	case RADIO_BUTTON:
 	  if (isNullOrEmpty(question.getAnswer())) {
-	    addException("testRequiredFields");
-	  }
-	  break;
-
-	case DATE:
-	  if (isNullOrEmpty(question.getDateAnswer())) {
 	    addException("testRequiredFields");
 	  }
 	  break;
