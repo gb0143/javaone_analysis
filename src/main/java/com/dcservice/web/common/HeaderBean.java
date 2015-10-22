@@ -22,7 +22,6 @@ public class HeaderBean extends BasePageBean {
     try {
       updateResponsesCount();
     } catch (Exception e) {
-      e.printStackTrace();
     }
     icon = "http://softarex.com/wp-content/themes/softarex/img/logo.svg";
   }
