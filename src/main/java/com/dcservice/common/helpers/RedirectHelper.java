@@ -32,7 +32,7 @@ public class RedirectHelper extends BaseBaseClass {
     }
   }
 
-  public static void sendRedirect(String linkTemplate, Object... params) {
+  public static void sendRedirectWithParam(String linkTemplate, Object... params) {
     String link = String.format(linkTemplate, params);
     sendRedirect(link);
   }

@@ -139,7 +139,7 @@ public class FieldEditBean extends BaseValidationBean implements Serializable {
   }
 
   private void afterSave() {
-    RedirectHelper.goTo(PagesTypes.FIELD_LIST);
+    RedirectHelper.sendRedirectWithParam(RedirectHelper.getLink(PagesTypes.FIELD_LIST));
   }
 
   private void saveOptions(Field field) {
