@@ -52,6 +52,14 @@ public class ListHelper extends BaseBaseClass {
         }
     }
 
+    public static String concatToString(List<String> list) {
+        String result = "";
+        for(String item : list){
+            result = result + item;
+        }
+        return result;
+    }
+
     public static <T extends BaseModel> void bubbleSort(T[] list) {
         T temp;
         for (int i1 = 0; i1 < list.length; i1++) {
