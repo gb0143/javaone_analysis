@@ -1,7 +1,1 @@
-.idea
-.project
-*.eml
-*.iml
-src/main/.settings
-analysis.userlibraries
-.classpath
+build
