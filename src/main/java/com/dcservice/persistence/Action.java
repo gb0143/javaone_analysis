@@ -13,7 +13,7 @@ public abstract class Action implements IAction {
 
 	@Override
 	public void onException(Exception e) throws Exception {
-		throw e;
+		throw new IllegalStateException(e.getMessage());
 	}
 
 	@Override
